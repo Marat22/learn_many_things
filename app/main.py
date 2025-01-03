@@ -2,14 +2,24 @@ from fastapi import FastAPI, Depends
 from fastapi.responses import JSONResponse
 
 from sqlalchemy.orm import Session
-from . import models, schemas
-from .database import engine, get_db
+import schemas
+import models
+from database import engine, get_db
 
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+
+# @app.get("/")
+# def read_root():
+#     return {"Hello": "World"}
+
+
+# @app.get("/items/{item_id}")
+# def read_item(item_id: int, q: Union[str, None] = None):
+#     return {"item_id": item_id, "q": q}
 
 @app.get("/teachers/{teacher_id}")
 def get_teacher(teacher_id: int, db: Session = Depends(get_db)):

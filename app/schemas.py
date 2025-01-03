@@ -1,8 +1,8 @@
 from pydantic import BaseModel, conint, Field, validator, field_validator
 from datetime import date
 from typing import Annotated
-from .database import get_db
-from . import models
+from database import get_db
+import models
 
 
 class TeacherCreate(BaseModel):

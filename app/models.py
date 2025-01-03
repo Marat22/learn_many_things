@@ -1,5 +1,5 @@
 from sqlalchemy import Column, DATE, Integer, String, BIGINT, VARCHAR
-from .database import Base
+from database import Base
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column, Session
 from sqlalchemy import create_engine, Integer, String, ForeignKey
