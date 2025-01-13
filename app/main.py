@@ -1,54 +1,39 @@
-from fastapi import FastAPI, Depends
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 
-from sqlalchemy.orm import Session
-import schemas
+import crud
 import models
-from database import engine, get_db
-
+import schemas
+from database import engine
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
 
-# @app.get("/")
-# def read_root():
-#     return {"Hello": "World"}
-
-
-# @app.get("/items/{item_id}")
-# def read_item(item_id: int, q: Union[str, None] = None):
-#     return {"item_id": item_id, "q": q}
-
 @app.get("/teachers/{teacher_id}")
-def get_teacher(teacher_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Teacher).where(models.Teacher.id == teacher_id).one()
+def get_teacher(teacher_id: int):
+    return crud.get_teacher_by_id(teacher_id)
 
 
 @app.get("/teachers/")
-def get_all_teachers(db: Session = Depends(get_db)):
-    return db.query(models.Teacher).all()
+def get_all_teachers():
+    return crud.get_all_teachers()
 
 
 @app.get("/grades")
-def get_student_grades(student_id: int | None = None, teacher_id: int | None = None, db: Session = Depends(get_db)):
-    return db.query(models.Grade).where(models.Grade.student_id == student_id).all()
+def get_student_grades_by_id(student_id: int | None = None):
+    return crud.get_student_grades_by_id(student_id)
 
 
 @app.post("/grades/")
-def add_grade(grade: schemas.GradeCreate, db: Session = Depends(get_db)):
+def add_grade(grade: schemas.GradeCreate):
     new_grade = models.Grade(**grade.model_dump())
-    db.add(new_grade)
-    db.commit()
-    db.refresh(new_grade)
+    crud.add_grade(new_grade)
     return new_grade
 
 
 @app.post("/students/")
-def add_student(student: schemas.StudentCreate, db: Session = Depends(get_db)):
+def add_student(student: schemas.StudentCreate):
     new_student = models.Student(**student.model_dump())
-    db.add(new_student)
-    db.commit()
-    db.refresh(new_student)
+    crud.add_student(new_student)
     return new_student

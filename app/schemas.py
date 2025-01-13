@@ -1,8 +1,10 @@
-from pydantic import BaseModel, conint, Field, validator, field_validator
 from datetime import date
 from typing import Annotated
-from database import get_db
+
+from pydantic import BaseModel, Field, field_validator
+
 import models
+from database import get_db
 
 
 class TeacherCreate(BaseModel):
@@ -33,7 +35,7 @@ class GradeCreate(BaseModel):
 
     @field_validator("teacher_id")
     def validate_teacher_id(cls, value):
-        db = next(get_db()) # Получаем сессию для проверки
+        db = next(get_db())  # Получаем сессию для проверки
         if db.query(models.Teacher.id).filter(models.Teacher.id == value).one_or_none() is None:
             raise ValueError(f"`teacher_id` {value} не найден в таблице `teacher`.")
         return value

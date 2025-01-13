@@ -1,3 +1,7 @@
-Project to practice PostgreSQL, sqlalchemy, psycopg2 and FastAPI
-
-
+## Goal
+Practice:
+- PostgreSQL
+- sqlalchemy
+- FastAPI
+- Pydantic
+- docker
