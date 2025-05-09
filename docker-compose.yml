@@ -9,18 +9,16 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DATABASE_URL=postgresql://postgres:221205@db:5432/college
+    env_file:
+      - .env
     volumes:
       - ./app:/app
 
   db:
     image: postgres:17
     container_name: postgres_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 221205
-      POSTGRES_DB: college
+    env_file:
+      - .env
     ports:
       - "5433:5432"
     volumes:
