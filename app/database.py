@@ -5,11 +5,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 
 # Параметры подключения к БД
-username = "postgres"
-password = "221205"  # Пароль из docker-compose.yml
-host = "db"  # Имя сервиса БД в docker-compose.yml
-port = "5432"  # Внутренний порт PostgreSQL
-database = "college"
+username = ""
+password = ""  # Пароль из docker-compose.yml
+host = ""  # Имя сервиса БД в docker-compose.yml
+port = ""  # Внутренний порт PostgreSQL
+database = ""
 SQLALCHEMY_DATABASE_URL = f"postgresql://{username}:{password}@{host}/{database}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
